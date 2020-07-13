@@ -1,0 +1,12 @@
+{
+  "name": "vidly-node",
+  "version": "1.0.0",
+  "description": "Vidly project with mosh, starting at 5.express advanced topics",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "express": "^4.17.1",
+    "uuid": "^8.2.0"
+  }
+}
