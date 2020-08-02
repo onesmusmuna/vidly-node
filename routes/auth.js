@@ -20,9 +20,7 @@ router.post("/", async (req, res) => {
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword) return res.send("Invalid user or password");
 
-  // we need to return a json web token
-  // generating a token, private key should be in an environmental variable
-  const token = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY);
+  const token = user.generateAuthToken();
 
   res.send(token);
 });

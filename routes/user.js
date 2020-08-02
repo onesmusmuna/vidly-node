@@ -1,7 +1,6 @@
 // Registering users
 const express = require("express");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const { User, joiUserSchema } = require("../models/user.js");
 const router = express.Router();
@@ -27,7 +26,8 @@ router.post("/", async (req, res) => {
 
   await user.save();
 
-  const token = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY);
+  const token = user.generateAuthToken();
+
   res.header("x-auth-token", token).send(`Successfully Registered: ${user.name}`);
 });
 
