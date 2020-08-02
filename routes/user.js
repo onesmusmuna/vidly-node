@@ -2,8 +2,16 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 
+const auth = require("../middleware/auth.js");
 const { User, joiUserSchema } = require("../models/user.js");
 const router = express.Router();
+
+// getting current user, this is more secure than adding an :id
+router.get("/me", auth, async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password -__v");
+
+  res.send(user);
+});
 
 router.post("/", async (req, res) => {
   // validate input
