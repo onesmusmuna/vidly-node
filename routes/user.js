@@ -1,7 +1,7 @@
 // Registering users
 const express = require("express");
 const bcrypt = require("bcrypt");
-const _ = require("lodash");
+const jwt = require("jsonwebtoken");
 
 const { User, joiUserSchema } = require("../models/user.js");
 const router = express.Router();
@@ -27,12 +27,8 @@ router.post("/", async (req, res) => {
 
   await user.save();
 
-  // using lodash pick method
-  // helps you pick props of an object you are intrested with
-  // _.pick(<obj>, ['<prop1>', '<prop2>'])
-  // It returns a new obj with specified props
-
-  res.send(_.pick(user, ["_id", "name", "email"]));
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY);
+  res.header("x-auth-token", token).send(`Successfully Registered: ${user.name}`);
 });
 
 module.exports = router;

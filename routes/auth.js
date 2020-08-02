@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
 
   // we need to return a json web token
   // generating a token, private key should be in an environmental variable
-  const token = jwt.sign({ _id: user._id, name: user.name }, process.env.JWT_PRIVATE_KEY);
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY);
 
   res.send(token);
 });
