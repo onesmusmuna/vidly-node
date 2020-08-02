@@ -1,11 +1,11 @@
 const express = require("express");
 
+const auth = require("../middleware/auth.js");
 const { Genre, joiGenreSchema } = require("../models/genre.js");
-const { route } = require("./home.js");
 const router = express.Router();
 
 // get all genres
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   const genres = await Genre.find();
   res.send(genres);
 });
